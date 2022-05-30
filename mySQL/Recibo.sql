@@ -56,8 +56,7 @@ CONSTRAINT fk_Recibo_PFisicaContratada FOREIGN KEY (cd_pessoaFisicaContratada)
             REFERENCES PessoaFisica (cd_pessoaFisica),
 CONSTRAINT fk_Recibo_PFisicaContratante FOREIGN KEY (cd_pessoaFisicaContratante)
             REFERENCES PessoaFisica (cd_pessoaFisica)
-);
-  
+); 
 
 -- CONTRATA 101  CONTRATADO 106 CIDADE 10
 INSERT INTO Recibo (cd_Recibo,        dt_EmissaoRecibo, 
