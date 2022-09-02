@@ -21,7 +21,7 @@ INSERT into Empregado( IdEmpregado,  NomeEmpregado, IdDepto, Cargo,  Tempo_Emp, 
 values(100, "joao", 01, "gerente", 2, 1000, 300);
 
 INSERT into Empregado( IdEmpregado,  NomeEmpregado, IdDepto, Cargo,  Tempo_Emp,  Salario,  Comissao)
-values(101, "maria", 02, "gerente", 8, 3000, 100);
+values(103, "dani", 02, "e", 8, null , 100);
 
 INSERT into Departamento( IdDepto,  NomeDepto, Gerente,  Divisao, Local )
 values(01, "vendas", 100 , "div1", "sul");
@@ -58,5 +58,6 @@ salario/30 as 'Salário Diário',
 salario/30/8 as 'Salário por hora',
 salario/30/8/60 as 'Salário por minuto', 
 salario/30/8/60/60 as 'Salário por segundo'
+isnull (salario, 0) as 'Salário'
 from Empregado;
 
