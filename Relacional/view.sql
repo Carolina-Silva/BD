@@ -1,4 +1,4 @@
--- Testado em SQL server ----------------------------------------------
+-- Testado em SQL server (Microsoft)----------------------------------------------
 
 CREATE TABLE departamento(
     idDepto			integer 			not null 	PRIMARY KEY,
