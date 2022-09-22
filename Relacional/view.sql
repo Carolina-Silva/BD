@@ -18,7 +18,7 @@ SELECT * from departamento;
 
 SELECT * from vwDepGerente;
 ---63---------------------------------------------------------------
-CREATE VIEW vwOrders AS
+CREATE VIEW vwOrders1 AS
 Select
     o.orderId, 
     o.orderDate, 
@@ -36,7 +36,7 @@ GROUP BY o.orderId, o.orderDate, e.firstName
 ORDER BY Total DESC
 
 ---64--------------------------------------------------------------
-CREATE VIEW vwOrders AS
+CREATE VIEW vwOrders2 AS
 SELECT
     o.OrderID,
     o.OrderDate,
@@ -55,7 +55,7 @@ Inner JOIN Categories c ON (c.CategoryID = p.CategoryID)
 
 ---65---------------------------------------------------------------
 
-CREATE VIEW vwOrders AS
+CREATE VIEW vwOrders3 AS
 SELECT
     c.customername,
     SUM(d.Quantity * p.Price) as 'Total de Vendas',
@@ -69,7 +69,7 @@ GROUP BY c.customername
 ORDER BY 3 DESC
 
 ---66---------------------------------------------------------------
-CREATE VIEW vwOrders As
+CREATE VIEW vwOrders4 As
 SELECT
     c.categoryname,
     SUM(d.Quantity * p.Price) as 'Total de Vendas',
@@ -82,7 +82,7 @@ GROUP BY c.categoryname
 ORDER BY 3 DESC
 
 ---67---------------------------------------------------------------
-CREATE VIEW vwOrders AS
+CREATE VIEW vwOrders5 AS
 SELECT
     e.LastName+', '+e.FirstName as 'Empregado',
     SUM(d.Quantity * p.Price) as 'Total de Vendas',
@@ -96,7 +96,7 @@ GROUP BY e.LastName+', '+e.FirstName
 ORDER BY 3 DESC
 
 ---68---------------------------------------------------------------
-CREATE VIEW vwOrders AS
+CREATE VIEW vwOrders6 AS
 SELECT
     s.ShipperName,
     SUM(d.Quantity * p.Price) as 'Total de Vendas',
@@ -110,7 +110,7 @@ GROUP BY s.ShipperName
 ORDER BY 3 DESC
 
 ---69---------------------------------------------------------------
-CREATE VIEW vwOrders AS
+CREATE VIEW vwOrders7 AS
 SELECT
     p.productname,
     SUM(d.Quantity * p.Price) as 'Total de Vendas', 
@@ -122,7 +122,7 @@ GROUP BY p.productname
 ORDER BY 3 DESC
 
 ---70---------------------------------------------------------------
-CREATE VIEW vwOrders AS
+CREATE VIEW vwOrders8 AS
 SELECT
   s.ShipperName,
   p.ProductName,
@@ -136,7 +136,7 @@ GROUP BY s.ShipperName, p.ProductName
 ORDER BY 'Total de Vendas' DESC
 
 ---71---------------------------------------------------------------
-CREATE VIEW vwOrders AS
+CREATE VIEW vwOrders9 AS
 SELECT
    YEAR(o.OrderDate) AS 'Ano',
    MONTH(o.OrderDate) AS 'Mês',
@@ -149,7 +149,7 @@ GROUP BY YEAR(o.OrderDate),MONTH(o.OrderDate)
 ORDER BY 'Ano' DESC,'Mês' DESC
 
 ---72---------------------------------------------------------------
-CREATE VIEW vwOrders AS
+CREATE VIEW vwOrders10 AS
 select 
   DATEPART(mm,OrderDate),Month(Orderdate) as mes,
   DATEPART(dy,OrderDate) as 'dia do ano',
