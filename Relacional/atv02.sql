@@ -40,7 +40,10 @@ SELECT  divisao from Departamento ;
 
 SELECT DISTINCT divisao from Departamento ;
 
-SELECT divisao || ' - ' || local as 'Divisão + Local' FROM Departamento;
+Select
+Distinct Divisao + ' - ' + Local
+From
+Departament
 
 SELECT nomeempregado, salario, 1.1*salario as 'Salário Mais 10%', 
 1.2*salario as 'Salário Mais 20%', 
