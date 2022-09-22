@@ -18,8 +18,8 @@
 
 -- •       Retornar “Dia Inválido!”
 
-CREATE  FUNCTION f_diaSemanaExt(@dia int)
-    RETURN varchar(20)
+CREATE FUNCTION f_diaSemanaExt(@dia int)
+    returns varchar(20)
 AS
 BEGIN
     DECLARE @diaExt varchar(20)
@@ -47,7 +47,7 @@ END
 DECLARE @dia int
 set @dia = 1
 
-SELECT f_diaSemanaExt(@dia)
+SELECT dbo.f_diaSemanaExt(@dia)
 
 
 
@@ -74,7 +74,7 @@ SELECT f_diaSemanaExt(@dia)
 -- •       Retornar “Mês Inválido!”
 
 CREATE  FUNCTION f_MesExtenso(@mes int)
-    RETURN varchar(20)
+    returns varchar(20)
 AS
 BEGIN
     DECLARE @mesExt varchar(20)
@@ -113,7 +113,7 @@ END
 DECLARE @mes int
 set @mes = 1
 
-SELECT f_MesExtenso(@mes)
+SELECT dbo.f_MesExtenso(@mes)
 
 -- -----------------------------------------------------------
 -- 77. Criar uma função 
@@ -124,8 +124,8 @@ SELECT f_MesExtenso(@mes)
 
 -- –      E deve retornar se o numero é “Par” ou “Ímpar”
 
-CREATE f_parImpar(@numero int)
-    RETURN varchar(10)
+CREATE Function f_parImpar(@numero int)
+    returns varchar(10)
 AS
 BEGIN
     IF(@numero % 2 = 0)
@@ -136,7 +136,7 @@ END
 DECLARE @numero int
 set @numero = 3
 
-SELECT f_ParImpar(@numero);
+SELECT dbo.f_ParImpar(@numero);
 
 ----------------------------------------------------------------
 -- 78. Criar uma função 
@@ -152,22 +152,18 @@ SELECT f_ParImpar(@numero);
 -- retornar esse valor
 
 CREATE FUNCTION f_percentual(@valor decimal(10,2), @perc decimal(5,2))
-    RETURN decimal(10,2)
+    returns decimal(10,2)
 AS
 BEGIN
-    DECLARE @result decimal(10,2)
-    @result = (@valor * @perc) / 100
-    
-    RETURN result
+    DECLARE @result decimal(10,2)    
+    RETURN (@valor * @perc) / 100
 END
 
 DECLARE @valor decimal(10,2)
 set @valor = 200
-
 DECLARE @perc decimal(5,2)
 set @perc = 100
-
-SELECT f_percentual(@valor, @perc)
+SELECT dbo.f_percentual(@valor, @perc)
 
 
 -- --------------------------------------------------------------------
@@ -184,7 +180,7 @@ SELECT f_percentual(@valor, @perc)
 -- •       Maria Joaquina Santos    retornar o último nome Santos
 
 CREATE FUNCTION f_UltimoNome(@nome varchar(200))
-    RETURN varchar(100)
+    returns varchar(100)
 AS
 BEGIN
     return REVERSE(SUBSTRING(REVERSE(@nome), 0, CHARINDEX(' ', REVERSE(@nome))))
@@ -193,7 +189,7 @@ END
 DECLARE @nome varchar(200)
 set @nome = 'João da Silva'
 
-SELECT f_UltimoNome(@nome);
+SELECT dbo.f_UltimoNome(@nome);
 
 
 
