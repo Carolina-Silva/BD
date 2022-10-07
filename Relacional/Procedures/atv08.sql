@@ -1,6 +1,12 @@
+-- Porque usar? -> corta processos, roda mais rápido 
+--(um 'programa' dentro do BD)
+--Procedure != View (view só aceita select, só para consulta)
+
+
+
 --EXEMPLOS 
 --Procedure - Exemplo--------------------------------------------------------------
--- CREATEPROCEDURE p_RetornaTodosFuncionarios
+-- CREATE PROCEDURE p_RetornaTodosFuncionarios
 -- AS 
 --     Select  
 --     e.NomeEmpregado,  
@@ -16,7 +22,7 @@
 
 
 -- Procedure – Agrupando Dados--------------------------------------------------------------
--- CREATEPROCEDURE p_RetornaTotaisFuncionarios
+-- CREATE PROCEDURE p_RetornaTotaisFuncionarios
 -- AS 
 --     Select  
 --     d.NomeDepto,  
@@ -39,7 +45,7 @@
 -- execute p_RetornaTotaisFuncionarios
 
 -- Procedure – Passando paramêtro-------------------------------------------------------------
--- CREATEPROCEDURE p_RetornaFuncionarios
+-- CREATE PROCEDURE p_RetornaFuncionarios
 -- (@NomeDepto nVarchar(30))
 -- AS 
 --     Selecte.NomeEmpregado,
@@ -57,7 +63,7 @@
 
 
 -- Procedure – Passando vários paramêtros-----------------------------------------------------
--- CreateProcedure DepartamentoInsert
+-- Create Procedure DepartamentoInsert
 -- ( @IdDepto int,
 -- @NomeDepto varchar(15),
 -- @Gerente int,
@@ -82,7 +88,7 @@
 
 
 -- Procedure – Passando vários paramêtros-----------------------------------------------------
--- CREATEProcedure DepartamentoAumentoSalario
+-- CREATE Procedure DepartamentoAumentoSalario
 -- ( @IdDepto int,
 -- @PercentualAumento decimal(5,2))
 -- As 
@@ -96,7 +102,7 @@
 
 
 -- Procedure – Passando e recebendo vários paramêtros-----------------------------------------
--- CREATEProcedure DepartamentoAumentoSalario_v2
+-- CREATE Procedure DepartamentoAumentoSalario_v2
 -- ( @IdDepto int,
 -- @PercentualAumento decimal(5,2),
 -- @TotalAntesAumento decimal(10,2)OUTPUT,
@@ -118,4 +124,164 @@
 -- Select @TotalAntesAumento 'Total Antes Aumento', @TotalDepoisAumento 'Total DepoisAumento'
 
 
+create table departamento (
+        idDepto integer not null primary key ,
+        nomeDepto varchar(15) not null,
+        gerente integer not null,
+        divisao varchar(10) not null,
+        local varchar(15) not null
+ )
 
+insert departamento (iddepto, nomedepto, gerente, 
+divisao, local) 
+ values(1,'RH', 1, 'Adm', 'Diadema') 
+ insert departamento (iddepto, nomedepto, gerente, 
+divisao, local) 
+ values(2,'C.Rec.', 3, 'Adm', 'Diadema') 
+ insert departamento (iddepto, nomedepto, gerente, 
+divisao, local) 
+ values(3,'CP', 2, 'Adm', 'Diadema') 
+
+create table Empregado(
+        IdEmpregado integer NOT NULL,
+        NomeEmpregado varchar(20) NOT NULL,
+        IdDepto integer NOT NULL,
+        Cargo varchar(6) NOT NULL,
+        Tempo_Emp integer NULL,
+        Salario decimal(10,2) NULL,
+        Comissao decimal(10,2) NULL
+        PRIMARY KEY (IdEmpregado)
+)
+
+insert into empregado (idempregado, nomeempregado, 
+iddepto, cargo, tempo_emp, salario, comissao)
+values (1, 'Marcos', 1, 'Prof', 10, 1800.00, 10)
+insert into empregado (idempregado, nomeempregado, 
+iddepto, cargo, tempo_emp, salario, comissao)
+values (2, 'Maria', 1, 'Aux.', 1, 1500.00, 10)
+insert into empregado (idempregado, nomeempregado, 
+iddepto, cargo, tempo_emp, salario, comissao)
+values (3, 'Juliana', 2, 'Aux.', 1, 1500.00, 10)
+
+
+--82---------------------------------------OK-----------------------------------------------
+CREATE PROCEDURE DepartamentoUpdate 
+(   @idDepto int, 
+    @NomeDepto varchar(15),
+    @Gerente int, 
+    @Divisao varchar(10), 
+    @Local varchar(15)
+)
+AS
+UPDATE
+    Departamento
+SET
+    idDepto = @idDepto,
+    NomeDepto = @NomeDepto,
+    Gerente = @Gerente,
+    Divisao = @Divisao, 
+    Local = @Local
+WHERE 
+    IdDepto = @idDepto
+
+
+EXECUTE DepartamentoUpdate 1,'RH', 1, 'GGG', 'Diadema'
+
+--83-----------------------------------------------OK---------------------------------------
+CREATE PROCEDURE DepartamentoDelete
+    (   @idDepto int,
+        @TotalDepartamentos int OUTPUT
+    )
+AS
+DELETE FROM Departamento WHERE idDepto = @idDepto 
+
+SELECT @TotalDepartamentos = Count(*) FROM Departamento
+
+Declare  @TotalDepartamentos int
+EXECUTE DepartamentoDelete 3,  @TotalDepartamentos output
+SELECT @TotalDepartamentos 'TOTAL DOS DEPTO'
+
+--84----------------------------------------------------OK----------------------------------
+CREATE PROCEDURE EmpregadoInsert
+(   @IdEmpregado int, 
+    @NomeEmpregado varchar(20), 
+    @IdDepto int, 
+    @Cargo varchar(6), 
+    @Tempo_Emp int, 
+    @Salario decimal(10,2), 
+    @Comissao decimal(10,2),
+    @TotalEmpregados INT OUTPUT
+) 
+AS
+INSERT INTO Empregado(
+                    IdEmpregado, 
+                    NomeEmpregado , 
+                    IdDepto, 
+                    Cargo, 
+                    Tempo_Emp, 
+                    Salario, 
+                    Comissao
+)
+VALUES( @IdEmpregado, 
+                    @NomeEmpregado , 
+                    @IdDepto, 
+                    @Cargo, 
+                    @Tempo_Emp, 
+                    @Salario, 
+                    @Comissao
+)
+
+SELECT @TotalEmpregados = Count(*) FROM Empregado
+
+
+Declare @TotalEmpregados INT
+EXECUTE EmpregadoInsert  4, 'joao', 2, 'vendedor', 5, 1500.68, 345.00, @TotalEmpregados OUTPUT
+SELECT @TotalEmpregados 'TOTAL EMPREGADOS'
+
+
+--85------------------------------OK--------------------------------------------------------
+CREATE PROCEDURE EmpregadoUpdate
+(   @IdEmpregado int, 
+    @NomeEmpregado varchar(20), 
+    @IdDepto int, 
+    @Cargo varchar(6), 
+    @Tempo_Emp int, 
+    @Salario decimal(10,2), 
+    @Comissao decimal(10,2)
+)
+AS
+UPDATE
+    Empregado
+SET
+    IdEmpregado = @IdEmpregado,
+    NomeEmpregado = @NomeEmpregado,
+    IdDepto = @IdDepto,
+    Cargo = @Cargo,
+    Tempo_Emp = @Tempo_Emp,
+    Salario = @Salario,
+    comissao = @Comissao
+WHERE IdEmpregado = @IdEmpregado
+
+EXECUTE EmpregadoUpdate 200
+
+
+--86------------------------------------------OK--------------------------------------------
+CREATE PROCEDURE EmpregadoDelete
+    (   @IdEmpregado int, 
+        @TotalEmpregados INT OUTPUT
+    )
+AS
+DELETE FROM Empregado WHERE idempregado = @idempregado 
+
+SELECT @TotalEmpregados = Count(*) FROM Empregado
+
+Declare  @TotalEmpregados int
+EXECUTE EmpregadoDelete 2,  @TotalEmpregados output
+SELECT @TotalEmpregados 'TOTAL DOS EMPREGADOS'
+
+--87-------------------------------------OK-------------------------------------------------
+CREATE PROCEDURE EmpregadoSelect 
+AS
+    SELECT * FROM Empregado
+
+EXECUTE EmpregadoSelect
