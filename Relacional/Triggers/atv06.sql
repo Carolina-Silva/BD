@@ -72,9 +72,9 @@ ON Movimentacao
 After Delete 
 AS
 IF(Movimentacao.TipoMov = 'E')
-    Produto.QtdeProduto -= Movimentacao.QtdeMov
+    Produto.QtdeProduto = Produto.QtdeProduto - Movimentacao.QtdeMov
 IF(Movimentacao.TipoMov = 'S')
-    Produto.QtdeProduto += Movimentacao.QtdeMov
+    Produto.QtdeProduto = Produto.QtdeProduto + Movimentacao.QtdeMov
 
 
 
@@ -102,7 +102,7 @@ ON Movimentacao
 After Update 
 AS
 IF(Movimentacao.TipoMov = 'E')
-    Produto.QtdeProduto -= Movimentacao.QtdeMov
+    Produto.QtdeProduto = Produto.QtdeProduto - Movimentacao.QtdeMov
 IF(Movimentacao.TipoMov = 'S')
-    Produto.QtdeProduto += Movimentacao.QtdeMov
+    Produto.QtdeProduto = Produto.QtdeProduto + Movimentacao.QtdeMov
 
